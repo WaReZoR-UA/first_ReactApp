@@ -24,20 +24,24 @@ export class EmployeesListItem extends Component {
 
 
     render() {
-		const { name, salary } = this.props;
+		const { name, salary, onEmpDel } = this.props
 		const { increase, like } = this.state;
 
 		const increaseClass = increase ? ' increase' : '';
 		const likeClass = like ? ' like' : '';
 
         return (
-			<li
+            <li
                 className={
                     'list-group-item d-flex justify-content-between' +
                     increaseClass +
                     likeClass
                 }>
-                <span onClick={this.likeEmployee}className="list-group-item-label">{name}</span>
+                <span
+                    onClick={this.likeEmployee}
+                    className="list-group-item-label">
+                    {name}
+                </span>
                 <input
                     type="text"
                     className="list-group-item-input"
@@ -49,7 +53,9 @@ export class EmployeesListItem extends Component {
                         className="btn-cookie btn-sm">
                         <i className="fas fa-cookie"></i>
                     </button>
-                    <button className="btn-trash btn-sm">
+                    <button
+                        className="btn-trash btn-sm"
+                        onClick={onEmpDel}>
                         <i className="fas fa-trash"></i>
                     </button>
                     <i className="fas fa-star"></i>
