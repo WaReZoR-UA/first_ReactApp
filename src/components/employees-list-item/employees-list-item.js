@@ -31,17 +31,13 @@ export class EmployeesListItem extends Component {
 		const likeClass = like ? ' like' : '';
 
         return (
-            <li
+			<li
                 className={
                     'list-group-item d-flex justify-content-between' +
                     increaseClass +
                     likeClass
                 }>
-                <span
-                    onClick={this.likeEmployee}
-                    className="list-group-item-label">
-                    {name}
-                </span>
+                <span onClick={this.likeEmployee}className="list-group-item-label">{name}</span>
                 <input
                     type="text"
                     className="list-group-item-input"
