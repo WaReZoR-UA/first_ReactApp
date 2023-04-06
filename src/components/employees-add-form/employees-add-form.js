@@ -17,6 +17,15 @@ export class EmployeesAdd extends Component {
 		})
 	}
 
+	onSubmit = (e) => {
+		e.preventDefault();
+		this.props.employeeAdd(this.state.name, this.state.salary);
+		this.setState(() => ({
+			name: '',
+			salary:''
+		}))
+	}
+
 	render() {
 		const { name, salary } = this.state;
 
@@ -25,7 +34,9 @@ export class EmployeesAdd extends Component {
                 <h3>Add new employee</h3>
                 <form
                     action=""
-                    className="d-flex add-form">
+					className="d-flex add-form"
+					onSubmit={this.onSubmit}
+				>
                     <input
                         type="text"
 						name="name"

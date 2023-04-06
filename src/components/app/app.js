@@ -1,12 +1,12 @@
-import { Component } from 'react';
+import { Component } from 'react'
 
-import { AppFilter } from '../app-filter/app-filter';
-import { AppInfo } from '../app-info/app-info';
-import { EmployeesAdd } from '../employees-add-form/employees-add-form';
-import { EmployeesList } from '../employees-list/employees-list';
-import { SearchPanel } from '../search-panel/search-panel';
+import { AppFilter } from '../app-filter/app-filter'
+import { AppInfo } from '../app-info/app-info'
+import { EmployeesAdd } from '../employees-add-form/employees-add-form'
+import { EmployeesList } from '../employees-list/employees-list'
+import { SearchPanel } from '../search-panel/search-panel'
 
-import './app.css';
+import './app.css'
 
 export class App extends Component {
     constructor(props) {
@@ -44,6 +44,28 @@ export class App extends Component {
                 data: data.filter((employee) => employee.id !== id),
             }
         })
+	}
+	
+	employeeAdd = (name, salary) => {
+		const newEmployee = {
+			name: name,
+			salary: salary,
+			like: false,
+			increase: false,
+			id: this.idGen()
+		}
+		this.setState(({ data }) => {
+			const newData = [...data, newEmployee];
+			return {
+				data: newData
+			}
+		})
+	}
+
+    idGen = () => {
+        const timestamp = Date.now(),
+            rndNum = Math.floor(Math.random() * 100000000)
+        return +(timestamp + '' + rndNum)
     }
 
     render() {
@@ -60,7 +82,9 @@ export class App extends Component {
                     data={this.state.data}
                     onEmpDel={this.employeeDel}
                 />
-                <EmployeesAdd />
+				<EmployeesAdd
+					employeeAdd={this.employeeAdd}
+				/>
             </div>
         )
     }
