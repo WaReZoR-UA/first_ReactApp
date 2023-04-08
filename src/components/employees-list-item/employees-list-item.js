@@ -1,15 +1,7 @@
 import './employees-list-item.css'
 
 export const EmployeesListItem = (props) => {
-    const {
-        name,
-        salary,
-        onEmpDel,
-        increase,
-        like,
-        onToggleIncrease,
-        onToggleLike,
-    } = props
+    const { name, salary, onEmpDel, increase, like, onToggleProp } = props
 
     const increaseClass = increase ? ' increase' : ''
     const likeClass = like ? ' like' : ''
@@ -22,8 +14,9 @@ export const EmployeesListItem = (props) => {
                 likeClass
             }>
             <span
-                onClick={onToggleLike}
-                className="list-group-item-label">
+                onClick={onToggleProp}
+                className="list-group-item-label"
+                data-toggle="like">
                 {name}
             </span>
             <input
@@ -33,8 +26,9 @@ export const EmployeesListItem = (props) => {
             />
             <div className="d-flex justify-content-center align-items-center">
                 <button
-                    onClick={onToggleIncrease}
-                    className="btn-cookie btn-sm">
+                    onClick={onToggleProp}
+                    className="btn-cookie btn-sm"
+                    data-toggle="increase">
                     <i className="fas fa-cookie"></i>
                 </button>
                 <button

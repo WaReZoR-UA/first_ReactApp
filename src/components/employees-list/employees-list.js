@@ -2,7 +2,7 @@ import { EmployeesListItem } from '../employees-list-item/employees-list-item'
 
 import './employees-list.css'
 
-export const EmployeesList = ({ data, onEmpDel, onToggleIncrease, onToggleLike }) => {
+export const EmployeesList = ({ data, onEmpDel, onToggleProp }) => {
     const element = data.map((item) => {
         const { id, ...itemProps } = item
 
@@ -11,8 +11,7 @@ export const EmployeesList = ({ data, onEmpDel, onToggleIncrease, onToggleLike }
                 key={id}
                 {...itemProps}
                 onEmpDel={() => onEmpDel(id)}
-                onToggleIncrease={() => onToggleIncrease(id)}
-                onToggleLike={() => onToggleLike(id)}
+                onToggleProp={(e) => onToggleProp(id, e.currentTarget.getAttribute('data-toggle'))}
             />
         )
     })

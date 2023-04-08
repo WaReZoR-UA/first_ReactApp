@@ -46,20 +46,22 @@ export class App extends Component {
         })
     }
 
-    employeeAdd = (name, salary) => {
-        const newEmployee = {
-            name: name,
-            salary: salary,
-            like: false,
-            increase: false,
-            id: this.idGen(),
+	employeeAdd = (name, salary) => {
+		if (name.trim() !== '' && salary.trim() !== '') {
+			const newEmployee = {
+				name: name,
+				salary: salary,
+				like: false,
+				increase: false,
+				id: this.idGen(),
+			}
+			this.setState(({ data }) => {
+				const newData = [...data, newEmployee]
+				return {
+					data: newData,
+				}
+			})
         }
-        this.setState(({ data }) => {
-            const newData = [...data, newEmployee]
-            return {
-                data: newData,
-            }
-        })
     }
 
     idGen = () => {
@@ -68,30 +70,32 @@ export class App extends Component {
         return +(timestamp + '' + rndNum)
     }
 
-    onToggleIncrease = (id) => {
+    onToggleProp = (id, prop) => {
         this.setState(({ data }) => ({
             data: data.map((employee) =>
                 employee.id === id
-                    ? { ...employee, increase: !employee.increase }
+                    ? { ...employee, [prop] : !employee[prop] }
                     : employee
             ),
         }))
     }
 
-	onToggleLike = (id) => {
-		this.setState(({ data }) => ({
-            data: data.map((employee) =>
-                employee.id === id
-                    ? { ...employee, like: !employee.like }
-                    : employee
-            ),
-        }))
-	}
+    employeesTotal = () => {
+        return this.state.data.length
+    }
+
+    incTotal = () => {
+        const data = this.state.data
+        return  (data.filter((item) => item.increase)).length
+    }
 
     render() {
         return (
             <div className="app">
-                <AppInfo />
+                <AppInfo
+                    employeesTotla={this.employeesTotal()}
+                    incTotal={this.incTotal()}
+                />
 
                 <div className="search-panel">
                     <SearchPanel />
@@ -101,8 +105,7 @@ export class App extends Component {
                 <EmployeesList
                     data={this.state.data}
                     onEmpDel={this.employeeDel}
-                    onToggleIncrease={this.onToggleIncrease}
-                    onToggleLike={this.onToggleLike}
+                    onToggleProp={this.onToggleProp}
                 />
                 <EmployeesAdd employeeAdd={this.employeeAdd} />
             </div>
