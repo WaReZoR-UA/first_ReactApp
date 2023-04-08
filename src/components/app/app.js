@@ -44,29 +44,49 @@ export class App extends Component {
                 data: data.filter((employee) => employee.id !== id),
             }
         })
-	}
-	
-	employeeAdd = (name, salary) => {
-		const newEmployee = {
-			name: name,
-			salary: salary,
-			like: false,
-			increase: false,
-			id: this.idGen()
-		}
-		this.setState(({ data }) => {
-			const newData = [...data, newEmployee];
-			return {
-				data: newData
-			}
-		})
-	}
+    }
+
+    employeeAdd = (name, salary) => {
+        const newEmployee = {
+            name: name,
+            salary: salary,
+            like: false,
+            increase: false,
+            id: this.idGen(),
+        }
+        this.setState(({ data }) => {
+            const newData = [...data, newEmployee]
+            return {
+                data: newData,
+            }
+        })
+    }
 
     idGen = () => {
         const timestamp = Date.now(),
             rndNum = Math.floor(Math.random() * 100000000)
         return +(timestamp + '' + rndNum)
     }
+
+    onToggleIncrease = (id) => {
+        this.setState(({ data }) => ({
+            data: data.map((employee) =>
+                employee.id === id
+                    ? { ...employee, increase: !employee.increase }
+                    : employee
+            ),
+        }))
+    }
+
+	onToggleLike = (id) => {
+		this.setState(({ data }) => ({
+            data: data.map((employee) =>
+                employee.id === id
+                    ? { ...employee, like: !employee.like }
+                    : employee
+            ),
+        }))
+	}
 
     render() {
         return (
@@ -81,10 +101,10 @@ export class App extends Component {
                 <EmployeesList
                     data={this.state.data}
                     onEmpDel={this.employeeDel}
+                    onToggleIncrease={this.onToggleIncrease}
+                    onToggleLike={this.onToggleLike}
                 />
-				<EmployeesAdd
-					employeeAdd={this.employeeAdd}
-				/>
+                <EmployeesAdd employeeAdd={this.employeeAdd} />
             </div>
         )
     }
